@@ -1,0 +1,7 @@
+__pycache__
+*.py[cod]
+data
+models
+.vscode/
+.idea/
+.DS_Store
