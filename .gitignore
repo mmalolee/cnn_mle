@@ -5,3 +5,5 @@ models
 .vscode/
 .idea/
 .DS_Store
+logs
+.pytest_cache
