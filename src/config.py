@@ -14,13 +14,20 @@ LOGS_DIR = BASE_DIR / "logs"
 @dataclass(frozen=True)
 class InferenceConfig:
     """
-    Class which keeps MRI predictions parameters.
+    Class which keeps MRI prediction parameters.
     """
 
     model_name: str = "cnn_anti_tumor"
     image_size: tuple[int, int] = (250, 250)
+    ALLOWED_DEVICES: tuple[str, str, str] = ("cpu", "cuda", "mps")
     device: str = "cpu"
     batch_size: int = 32
+
+    def __post_init__(self):
+        if self.device not in self.ALLOWED_DEVICES:
+            raise ValueError(
+                f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
+            )
 
     @property
     def logs_path(self) -> Path:
