@@ -1,33 +1,35 @@
 import pytest
 from pathlib import Path
-from src.config import (
-    InferenceConfig,
-    BASE_DIR,
-    RAW_DATA_DIR,
-    PROCESSED_DATA_DIR,
-    MODELS_DIR,
-    LOGS_DIR,
-)
 from dataclasses import FrozenInstanceError
-import src.config
+import src.config as config
 
 ## testy na nowym branchu
 
 
-def test_base_dir_anchor():
-    assert (BASE_DIR / "src").exists()
+def test_base_dir_exists():
+    assert config.BASE_DIR.exists()
 
 
-def test_dir_structure():
-    assert "raw" in str(RAW_DATA_DIR)
-    assert "processed" in str(PROCESSED_DATA_DIR)
-    assert "models" in MODELS_DIR.parts
-    assert "checkpoints" in MODELS_DIR.parts
-    assert "logs" in str(LOGS_DIR)
+def test_data_paths_structure():
+    assert config.DATA_DIR.parent == config.BASE_DIR
+    assert config.RAW_DATA_DIR.parts[-2:] == ("data", "raw")
+    assert config.RAW_DATA_DIR.parent == config.DATA_DIR
+    assert config.PROCESSED_DATA_DIR.parts[-2:] == ("data", "processed")
+    assert config.PROCESSED_DATA_DIR.parent == config.DATA_DIR
+
+
+def test_models_paths_structure():
+    assert config.MODELS_DIR.parts[-2:] == ("models", "checkpoints")
+    assert config.MODELS_DIR.parent.parent == config.BASE_DIR
+
+
+def test_logs_path_structure():
+    assert config.LOGS_DIR.name == "logs"
+    assert config.LOGS_DIR.parent == config.BASE_DIR
 
 
 def test_inference_config_paths():
-    cfg = InferenceConfig()
+    cfg = config.InferenceConfig()
 
     assert isinstance(cfg.model_path, Path)
     assert isinstance(cfg.logs_path, Path)
@@ -37,7 +39,7 @@ def test_inference_config_paths():
 
 # INFERENCE
 def test_inference_config_values():
-    cfg = InferenceConfig(model_name="test_model")
+    cfg = config.InferenceConfig(model_name="test_model")
 
     assert isinstance(cfg.model_name, str)
     assert cfg.model_name == "test_model"
@@ -57,7 +59,7 @@ def test_inference_config_values():
 
 
 def test_config_is_frozen():
-    cfg = InferenceConfig()
+    cfg = config.InferenceConfig()
 
     with pytest.raises(FrozenInstanceError):
         setattr(cfg, "model_name", "new_name")
