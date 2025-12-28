@@ -5,7 +5,7 @@ import logging
 
 
 # --- FIXTURE -------------------------------------
-@pytest.fixture
+@pytest.fixture()
 def temporary_path(monkeypatch, tmp_path):
     monkeypatch.setattr("src.utils.LOGS_DIR", tmp_path)
 
