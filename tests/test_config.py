@@ -7,6 +7,7 @@ import src.config as config
 # PATHS
 def test_base_dir_exists():
     assert config.BASE_DIR.exists()
+    assert config.BASE_DIR.is_absolute()
 
 
 def test_data_paths_structure():
@@ -15,6 +16,9 @@ def test_data_paths_structure():
     assert config.RAW_DATA_DIR.parent == config.DATA_DIR
     assert config.PROCESSED_DATA_DIR.parts[-2:] == ("data", "processed")
     assert config.PROCESSED_DATA_DIR.parent == config.DATA_DIR
+    assert config.DATA_DIR.is_absolute()
+    assert config.RAW_DATA_DIR.is_absolute()
+    assert config.PROCESSED_DATA_DIR.is_absolute()
 
 
 def test_models_paths_structure():
