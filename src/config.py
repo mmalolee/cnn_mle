@@ -1,14 +1,39 @@
 from pathlib import Path
 from dataclasses import dataclass
+from torchvision import transforms
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+class PathsConfig:
+    @property
+    def base_dir(self) -> Path:
+        return Path(__file__).resolve().parent.parent
 
-DATA_DIR = BASE_DIR / "data"
-RAW_DATA_DIR = DATA_DIR / "raw"
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
-MODELS_DIR = BASE_DIR / "models" / "checkpoints"
-LOGS_DIR = BASE_DIR / "logs"
+    @property
+    def data_dir(self) -> Path:
+        return self.base_dir / "data"
+
+    @property
+    def raw_data_dir(self) -> Path:
+        return self.base_dir / "raw"
+
+    @property
+    def processed_data_dir(self) -> Path:
+        return self.base_dir / "processed"
+
+    @property
+    def models_dir(self) -> Path:
+        return self.base_dir / "models" / "checkpoints"
+
+    @property
+    def logs_dir(self) -> Path:
+        return self.base_dir / "logs"
+
+
+@dataclass(frozen=True)
+class ModelConfig:
+    img_size: int = 250
+    num_classes: int = 4
+    input_channels: int = 3
 
 
 @dataclass(frozen=True)
@@ -18,10 +43,9 @@ class InferenceConfig:
     """
 
     model_name: str = "cnn_anti_tumor"
-    image_size: tuple[int, int] = (250, 250)
     ALLOWED_DEVICES: tuple[str, str, str] = ("cpu", "cuda", "mps")
     device: str = "cpu"
-    batch_size: int = 32
+    batch_size: int = 1
 
     def __post_init__(self):
         if self.device not in self.ALLOWED_DEVICES:
@@ -30,33 +54,31 @@ class InferenceConfig:
             )
 
     @property
-    def logs_path(self) -> Path:
-        return LOGS_DIR
+    def transforms(self) -> transforms.Compose:
+        resizer = transforms.Resize([ModelConfig.img_size, ModelConfig.img_size])
+        tensor = transforms.ToTensor()
+        transformer = transforms.Compose([resizer, tensor])
 
-    @property
-    def model_path(self) -> Path:
-        return MODELS_DIR / self.model_name
+        return transformer
 
-    @property
-    def raw_data_path(self) -> Path:
-        return RAW_DATA_DIR
 
-    @property
-    def processed_data_path(self) -> Path:
-        return PROCESSED_DATA_DIR
+@dataclass(frozen=True)
+class TrainingConfig:
+    epochs: int = 10
+    learning_rate: float = 0.001
+    batch_size: int = 32
+    checkopoint_dir: Path = PathsConfig().models_dir
 
 
 if __name__ == "__main__":
     from src.utils import get_logger
 
-    log = get_logger("CONFIG")
-    log.info(f"Project's file is in: {BASE_DIR}")
-    log.info(f"Raw data is in: {RAW_DATA_DIR}")
-    log.info(f"Processed data is in: {PROCESSED_DATA_DIR}")
+    log = get_logger("CNN-MLE")
+    log.info(f"Project's file is in: {PathsConfig().base_dir}")
+    log.info(f"Raw data is in: {PathsConfig().raw_data_dir}")
+    log.info(f"Processed data is in: {PathsConfig().processed_data_dir}")
 
-    config = InferenceConfig()
-
-    if DATA_DIR.exists():
+    if PathsConfig().data_dir.exists():
         log.info("Data folder has been detected.")
 
     else:
