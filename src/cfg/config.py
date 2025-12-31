@@ -2,7 +2,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from torchvision import transforms
 from functools import cached_property
-from src.paths_config import PathsConfig
+from src.config.paths_config import PathsConfig
 
 
 @dataclass(frozen=True)

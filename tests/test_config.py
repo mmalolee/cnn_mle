@@ -1,48 +1,7 @@
 import pytest
 from pathlib import Path
 from dataclasses import FrozenInstanceError
-from src.config import PathsConfig  # , InferenceConfig, TrainingConfig
-
-
-@pytest.fixture(scope="session")
-def get_paths():
-    return PathsConfig()
-
-
-# PATHS
-def test_base_dir_exists(get_paths):
-    assert get_paths.base_dir.exists()
-    assert get_paths.base_dir.is_absolute()
-
-
-# def test_data_paths_structure():
-#     assert config.DATA_DIR.parent == config.BASE_DIR
-#     assert config.RAW_DATA_DIR.parts[-2:] == ("data", "raw")
-#     assert config.RAW_DATA_DIR.parent == config.DATA_DIR
-#     assert config.PROCESSED_DATA_DIR.parts[-2:] == ("data", "processed")
-#     assert config.PROCESSED_DATA_DIR.parent == config.DATA_DIR
-#     assert config.DATA_DIR.is_absolute()
-#     assert config.RAW_DATA_DIR.is_absolute()
-#     assert config.PROCESSED_DATA_DIR.is_absolute()
-
-
-# def test_models_paths_structure():
-#     assert config.MODELS_DIR.parts[-2:] == ("models", "checkpoints")
-#     assert config.MODELS_DIR.parent.parent == config.BASE_DIR
-
-
-# def test_logs_path_structure():
-#     assert config.LOGS_DIR.name == "logs"
-#     assert config.LOGS_DIR.parent == config.BASE_DIR
-
-
-# def test_inference_config_paths():
-#     cfg = config.InferenceConfig()
-
-#     assert isinstance(cfg.model_path, Path)
-#     assert isinstance(cfg.logs_path, Path)
-#     assert isinstance(cfg.raw_data_path, Path)
-#     assert isinstance(cfg.processed_data_path, Path)
+from src.config import InferenceConfig, TrainingConfig
 
 
 # # INFERENCE

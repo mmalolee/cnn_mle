@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from src.paths_config import PathsConfig
+from src.cfg.paths_config import PathsConfig
 
 
 @pytest.fixture(scope="session")
