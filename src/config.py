@@ -1,32 +1,8 @@
 from pathlib import Path
 from dataclasses import dataclass
 from torchvision import transforms
-
-
-class PathsConfig:
-    @property
-    def base_dir(self) -> Path:
-        return Path(__file__).resolve().parent.parent
-
-    @property
-    def data_dir(self) -> Path:
-        return self.base_dir / "data"
-
-    @property
-    def raw_data_dir(self) -> Path:
-        return self.base_dir / "raw"
-
-    @property
-    def processed_data_dir(self) -> Path:
-        return self.base_dir / "processed"
-
-    @property
-    def models_dir(self) -> Path:
-        return self.base_dir / "models" / "checkpoints"
-
-    @property
-    def logs_dir(self) -> Path:
-        return self.base_dir / "logs"
+from functools import cached_property
+from src.paths_config import PathsConfig
 
 
 @dataclass(frozen=True)
@@ -53,7 +29,7 @@ class InferenceConfig:
                 f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
             )
 
-    @property
+    @cached_property
     def transforms(self) -> transforms.Compose:
         resizer = transforms.Resize([ModelConfig.img_size, ModelConfig.img_size])
         tensor = transforms.ToTensor()
