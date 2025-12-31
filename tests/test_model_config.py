@@ -8,10 +8,11 @@ def model_config():
     return ModelConfig()
 
 
-def test_is_instance(model_config):
-    assert isinstance(model_config.img_size, int)
-    assert isinstance(model_config.num_classes, int)
-    assert isinstance(model_config.input_channels, int)
+@pytest.mark.parametrize(
+    "attr, default", [("img_size", int), ("num_classes", int), ("input_channels", int)]
+)
+def test_is_instance(model_config, attr, default):
+    assert isinstance(getattr(model_config, attr), default)
 
 
 @pytest.mark.parametrize(
