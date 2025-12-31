@@ -1,6 +1,6 @@
 import logging
 import sys
-from src.config import PathsConfig
+from src.cfg.paths_config import PathsConfig
 
 
 def get_logger(name: str) -> logging.Logger:
