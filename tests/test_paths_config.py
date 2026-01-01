@@ -17,7 +17,17 @@ def test_base_dir(paths):
 
 
 @pytest.mark.parametrize(
-    "attr_path", ["data_dir", "models_dir", "logs_dir", "src_dir", "cfg_dir"]
+    "attr_path",
+    [
+        "data_dir",
+        "training_data_dir",
+        "testing_data_dir",
+        "models_dir",
+        "checkpoints_dir",
+        "logs_dir",
+        "src_dir",
+        "cfg_dir",
+    ],
 )
 def test_is_instance_paths(paths, attr_path):
     path = getattr(paths, attr_path)
@@ -28,6 +38,8 @@ def test_is_instance_paths(paths, attr_path):
     "attr_path, expected",
     [
         ("data_dir", "data"),
+        ("training_data_dir", "Training"),
+        ("testing_data_dir", "Testing"),
         ("checkpoints_dir", "checkpoints"),
         ("models_dir", "models"),
         ("logs_dir", "logs"),
@@ -41,14 +53,23 @@ def test_paths_structure(paths, attr_path, expected):
 
 
 @pytest.mark.parametrize(
-    "attr_path", ["data_dir", "models_dir", "logs_dir", "src_dir", "cfg_dir"]
+    "attr_path",
+    [
+        "data_dir",
+        "training_data_dir",
+        "testing_data_dir",
+        "models_dir",
+        "logs_dir",
+        "src_dir",
+        "cfg_dir",
+    ],
 )
 def test_is_absolute(paths, attr_path):
     path = getattr(paths, attr_path)
     assert path.is_absolute()
 
 
-def test_checkopoints_path_structure(paths):
+def test_checkpoints_path_structure(paths):
     assert paths.checkpoints_dir.parts[-2:] == ("models", "checkpoints")
     assert paths.checkpoints_dir.parent.parent == paths.base_dir
 
@@ -58,6 +79,13 @@ def test_models_path_structure(paths):
     assert paths.models_dir.parent == paths.base_dir
 
 
+def test_testing_data_path_structure(paths):
+    assert paths.testing_data_dir.parent.parent == paths.base_dir
+
+
+def test_training_data_path_structure(paths):
+    assert paths.training_data_dir.parent.parent == paths.base_dir
+
+
 def test_logs_path_structure(paths):
-    assert paths.logs_dir.name == "logs"
     assert paths.logs_dir.parent == paths.base_dir

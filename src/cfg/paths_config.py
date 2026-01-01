@@ -12,6 +12,14 @@ class PathsConfig:
         return self.base_dir / "data"
 
     @cached_property
+    def training_data_dir(self) -> Path:
+        return self.data_dir / "Training"
+
+    @cached_property
+    def testing_data_dir(self) -> Path:
+        return self.data_dir / "Testing"
+
+    @cached_property
     def checkpoints_dir(self) -> Path:
         return self.base_dir / "models" / "checkpoints"
 
