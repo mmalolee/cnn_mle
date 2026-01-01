@@ -7,7 +7,14 @@ def create_project_structure():
         "data/raw": [],
         "data/processed": [],
         "models/checkpoints": [],
-        "src": ["__init__.py", "config.py", "model_loader.py", "utils.py"],
+        "src": ["__init__.py", "model_loader.py", "utils.py"],
+        "src/cfg": [
+            "config.py",
+            "inference_config.py",
+            "model_config.py",
+            "paths_config.py",
+            "training_config.py",
+        ],
         "tests": [],
     }
 
