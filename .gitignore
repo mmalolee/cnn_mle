@@ -7,3 +7,4 @@ models
 .DS_Store
 logs
 .pytest_cache
+todo.txt

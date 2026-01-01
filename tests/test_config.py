@@ -1,7 +1,8 @@
 import pytest
 from pathlib import Path
 from dataclasses import FrozenInstanceError
-from src.cfg.config import InferenceConfig, TrainingConfig
+
+# from src.cfg.config import InferenceConfig, TrainingConfig
 
 
 # # INFERENCE

@@ -6,10 +6,9 @@ from torchvision import transforms
 
 @dataclass(frozen=True)
 class InferenceConfig:
-    model_name: str = "cnn_anti_tumor"
+    model_name: str
+    device: str
     ALLOWED_DEVICES: tuple[str, str, str] = ("cpu", "cuda", "mps")
-    device: str = "cpu"
-    batch_size: int = 1
 
     def __post_init__(self):
         if self.device not in self.ALLOWED_DEVICES:
