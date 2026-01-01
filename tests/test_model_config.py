@@ -3,16 +3,18 @@ from src.cfg.model_config import ModelConfig
 from dataclasses import FrozenInstanceError
 
 
+# # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="function")
 def model_config():
-    return ModelConfig(img_size=250, num_classes=4, input_channels=3)
+    return ModelConfig()
 
 
+# # --- TESTS ---------------------------------------
 @pytest.mark.parametrize(
-    "attr, value", [("img_size", 250), ("num_classes", 4), ("input_channels", 3)]
+    "attr, default", [("img_size", 250), ("num_classes", 4), ("input_channels", 3)]
 )
-def test_values(model_config, attr, value):
-    assert getattr(model_config, attr) == value
+def test_values(model_config, attr, default):
+    assert getattr(model_config, attr) == default
 
 
 @pytest.mark.parametrize(

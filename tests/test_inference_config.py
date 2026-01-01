@@ -4,11 +4,13 @@ from dataclasses import FrozenInstanceError
 from torchvision import transforms
 
 
+# # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="function")
 def inference_config():
     return InferenceConfig(model_name="test_model", device="cuda")
 
 
+# # --- TESTS ----------------------------------------
 @pytest.mark.parametrize(
     "attr, value",
     [("model_name", "test_model"), ("device", "cuda")],

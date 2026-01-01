@@ -3,11 +3,13 @@ from pathlib import Path
 from src.cfg.paths_config import PathsConfig
 
 
+# # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="session")
 def paths():
     return PathsConfig()
 
 
+# # --- TESTS ----------------------------------------
 def test_base_dir(paths):
     assert isinstance(paths.base_dir, Path)
     assert paths.base_dir.exists()
