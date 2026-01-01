@@ -11,7 +11,7 @@ def training_config():
     return TrainingConfig(epochs=10, learning_rate=0.001, batch_size=32)
 
 
-# # --- TESTS ---------------------------------------
+# # --- TESTS ----------------------------------------
 @pytest.mark.parametrize(
     "attr, value",
     [

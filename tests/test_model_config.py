@@ -9,7 +9,7 @@ def model_config():
     return ModelConfig()
 
 
-# # --- TESTS ---------------------------------------
+# # --- TESTS ----------------------------------------
 @pytest.mark.parametrize(
     "attr, default", [("img_size", 250), ("num_classes", 4), ("input_channels", 3)]
 )

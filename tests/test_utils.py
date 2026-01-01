@@ -26,7 +26,7 @@ def temporary_path(monkeypatch, tmp_path):
     return tmp_path
 
 
-# # --- TESTS ---------------------------------------
+# # --- TESTS ----------------------------------------
 def test_logs_dir_logic(base_dir, logs_dir):
     assert logs_dir.parent == base_dir
     assert logs_dir.parent.is_absolute()

@@ -4,8 +4,7 @@ from pathlib import Path
 def create_project_structure():
     PROJECT_STRUCTURE = {
         "": [".gitignore", "main.py", "requirements.txt"],
-        "data/raw": [],
-        "data/processed": [],
+        "data": [],
         "models/checkpoints": [],
         "src": ["__init__.py", "model_loader.py", "utils.py"],
         "src/cfg": [

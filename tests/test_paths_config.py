@@ -16,30 +16,46 @@ def test_base_dir(paths):
     assert paths.base_dir.is_absolute()
 
 
-def test_is_instance_paths(paths):
-    assert isinstance(paths.models_dir, Path)
-    assert isinstance(paths.logs_dir, Path)
-    assert isinstance(paths.raw_data_dir, Path)
-    assert isinstance(paths.processed_data_dir, Path)
+@pytest.mark.parametrize(
+    "attr_path", ["data_dir", "models_dir", "logs_dir", "src_dir", "cfg_dir"]
+)
+def test_is_instance_paths(paths, attr_path):
+    path = getattr(paths, attr_path)
+    assert isinstance(path, Path)
 
 
-def test_data_paths_structure(paths):
-    assert paths.data_dir.parent == paths.base_dir
-    assert paths.raw_data_dir.parts[-2:] == ("data", "raw")
-    assert paths.raw_data_dir.parent == paths.data_dir
-    assert paths.processed_data_dir.parts[-2:] == ("data", "processed")
-    assert paths.processed_data_dir.parent == paths.data_dir
+@pytest.mark.parametrize(
+    "attr_path, expected",
+    [
+        ("data_dir", "data"),
+        ("checkpoints_dir", "checkpoints"),
+        ("models_dir", "models"),
+        ("logs_dir", "logs"),
+        ("src_dir", "src"),
+        ("cfg_dir", "cfg"),
+    ],
+)
+def test_paths_structure(paths, attr_path, expected):
+    path = getattr(paths, attr_path, expected)
+    assert getattr(paths, attr_path).name == expected
 
 
-def test_is_absolute(paths):
-    assert paths.data_dir.is_absolute()
-    assert paths.raw_data_dir.is_absolute()
-    assert paths.processed_data_dir.is_absolute()
+@pytest.mark.parametrize(
+    "attr_path", ["data_dir", "models_dir", "logs_dir", "src_dir", "cfg_dir"]
+)
+def test_is_absolute(paths, attr_path):
+    path = getattr(paths, attr_path)
+    assert path.is_absolute()
 
 
-def test_models_paths_structure(paths):
-    assert paths.models_dir.parts[-2:] == ("models", "checkpoints")
-    assert paths.models_dir.parent.parent == paths.base_dir
+def test_checkopoints_path_structure(paths):
+    assert paths.checkpoints_dir.parts[-2:] == ("models", "checkpoints")
+    assert paths.checkpoints_dir.parent.parent == paths.base_dir
+
+
+def test_models_path_structure(paths):
+    assert paths.models_dir.name == "models"
+    assert paths.models_dir.parent == paths.base_dir
 
 
 def test_logs_path_structure(paths):
