@@ -6,7 +6,7 @@ def create_project_structure():
         "": [".gitignore", "main.py", "requirements.txt"],
         "data": [],
         "models/checkpoints": [],
-        "src": ["__init__.py", "model_loader.py", "utils.py"],
+        "src": ["__init__.py", "model_loader.py", "utils.py", "data_manager.py"],
         "src/cfg": [
             "config.py",
             "inference_config.py",
