@@ -1,7 +1,5 @@
-from functools import cached_property
 from typing import ClassVar
-from dataclasses import dataclass, field
-from src.cfg.model_config import ModelConfig
+from dataclasses import dataclass
 from torchvision import transforms
 
 
@@ -9,6 +7,7 @@ from torchvision import transforms
 class InferenceConfig:
     model_name: str
     device: str
+    img_size: int = 250
     mean: tuple[float, float, float] = (0.5, 0.5, 0.5)
     std: tuple[float, float, float] = (0.5, 0.5, 0.5)
 
@@ -20,14 +19,17 @@ class InferenceConfig:
                 f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
             )
 
-    @cached_property
-    def basic_transforms(self) -> list:
-        resizer = transforms.Resize([ModelConfig.img_size, ModelConfig.img_size])
-        tensor = transforms.ToTensor()
-        normalizer = transforms.Normalize(mean=self.mean, std=self.std)
+    @property
+    def pil_transforms(self) -> list:
+        return [transforms.Resize([self.img_size, self.img_size])]
 
-        return [resizer, tensor, normalizer]
+    @property
+    def tensor_transforms(self) -> list:
+        return [
+            transforms.ToTensor(),
+            transforms.Normalize(mean=self.mean, std=self.std),
+        ]
 
-    @cached_property
+    @property
     def basic_transformer(self) -> transforms.Compose:
-        return transforms.Compose(self.basic_transforms)
+        return transforms.Compose(self.pil_transforms + self.tensor_transforms)

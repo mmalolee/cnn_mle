@@ -1,5 +1,4 @@
 from pathlib import Path
-from functools import cached_property
 from dataclasses import dataclass
 from src.cfg.paths_config import PathsConfig
 from src.cfg.inference_config import InferenceConfig
@@ -11,6 +10,7 @@ class TrainingConfig(InferenceConfig):
     epochs: int
     learning_rate: float
     batch_size: int
+    rotation: int = 10
     checkpoint_dir: Path = PathsConfig().models_dir
 
     def __post_init__(self):
@@ -27,12 +27,13 @@ class TrainingConfig(InferenceConfig):
         if self.batch_size <= 0:
             raise ValueError("Batch size must be greater than 0")
 
-    @cached_property
+    @property
     def training_transforms(self) -> list:
-        basics = self.basic_transforms
+        t_transforms = [transforms.RandomRotation(self.rotation, fill=0)]
+        return t_transforms
 
-        return [basics[0], transforms.RandomRotation(10, fill=0), *basics[1:]]
-
-    @cached_property
+    @property
     def training_transformer(self) -> transforms.Compose:
-        return transforms.Compose(self.training_transforms)
+        return transforms.Compose(
+            self.pil_transforms + self.training_transforms + self.tensor_transforms
+        )
