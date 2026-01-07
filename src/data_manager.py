@@ -1,9 +1,8 @@
-from functools import cached_property
 from dataclasses import dataclass
 import os
+from pathlib import Path
 from torch.utils.data import DataLoader
-from torchvision import datasets
-from src.cfg.inference_config import InferenceConfig
+from torchvision import datasets, transforms
 from src.cfg.paths_config import PathsConfig
 from src.cfg.training_config import TrainingConfig
 
@@ -12,15 +11,17 @@ from src.cfg.training_config import TrainingConfig
 class DataLoad:
     path_config: PathsConfig
     train_config: TrainingConfig
-    inference_config: InferenceConfig
 
-    def _create_loader(self, root_path, shuffle=False) -> DataLoader:
-        dataset = datasets.ImageFolder(
-            root=root_path, transform=self.inference_config.transformer
-        )
+    def _create_loader(
+        self, root_path: Path, transformer: transforms.Compose, shuffle: bool
+    ) -> DataLoader:
+        if not root_path.exists():
+            raise FileNotFoundError(f"Data path does not exist: {root_path}.")
 
-        cpus = os.cpu_count() or 1
-        workers = cpus // 2
+        dataset = datasets.ImageFolder(root=root_path, transform=transformer)
+
+        cpus = os.cpu_count()
+        workers = (cpus // 2) if cpus is not None else 1
 
         return DataLoader(
             dataset,
@@ -30,14 +31,16 @@ class DataLoad:
             pin_memory=True,
         )
 
-    def get_train_loader(self) -> DataLoader:
-        return self._create_loader(self.path_config.training_data_dir, shuffle=True)
+    def get_training_data_loader(self) -> DataLoader:
+        return self._create_loader(
+            root_path=self.path_config.training_data_dir,
+            transformer=self.train_config.training_transformer,
+            shuffle=True,
+        )
 
-    def get_test_loader(self) -> DataLoader:
-        return self._create_loader(self.path_config.testing_data_dir, shuffle=False)
-
-    @cached_property
-    def classes(self):
-        return sorted(
-            [f.name for f in self.path_config.testing_data_dir.iterdir() if f.is_dir()]
+    def get_test_data_loader(self) -> DataLoader:
+        return self._create_loader(
+            root_path=self.path_config.testing_data_dir,
+            transformer=self.train_config.basic_transformer,
+            shuffle=False,
         )
