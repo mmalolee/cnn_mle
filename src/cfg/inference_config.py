@@ -7,7 +7,6 @@ from torchvision import transforms
 class InferenceConfig:
     model_name: str
     device: str
-    img_size: int = 250
     mean: tuple[float, float, float] = (0.5, 0.5, 0.5)
     std: tuple[float, float, float] = (0.5, 0.5, 0.5)
 
@@ -18,6 +17,10 @@ class InferenceConfig:
             raise ValueError(
                 f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
             )
+
+    @property
+    def img_size(self) -> int:
+        return 250
 
     @property
     def pil_transforms(self) -> list:
