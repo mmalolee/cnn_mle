@@ -11,7 +11,7 @@ class TrainingConfig(InferenceConfig):
     learning_rate: float
     batch_size: int
     rotation: int = 10
-    checkpoint_dir: Path = PathsConfig().models_dir
+    checkpoint_dir: Path = PathsConfig().checkpoints_dir
 
     def __post_init__(self):
         super().__post_init__()
@@ -29,8 +29,8 @@ class TrainingConfig(InferenceConfig):
 
     @property
     def training_transforms(self) -> list:
-        t_transforms = [transforms.RandomRotation(self.rotation, fill=0)]
-        return t_transforms
+        t_transforms = transforms.RandomRotation(self.rotation)
+        return [t_transforms]
 
     @property
     def training_transformer(self) -> transforms.Compose:

@@ -122,3 +122,35 @@ def test_resize_value(inference_config_with_default):
         inference_config_with_default.img_size,
         inference_config_with_default.img_size,
     ]
+
+
+@pytest.mark.parametrize("bad_mean_len", [(0.1, 0.2), (0.1, 0.2, 0.3, 0.4)])
+def test_mean_len(bad_mean_len):
+    with pytest.raises(ValueError):
+        InferenceConfig(
+            model_name="test_mean_len",
+            device="cuda",
+            mean=bad_mean_len,
+            std=(0.1, 0.1, 0.1),
+        )
+
+
+@pytest.mark.parametrize("bad_std_len", [(0.1, 0.2), (0.1, 0.2, 0.3, 0.4)])
+def test_std_len(bad_std_len):
+    with pytest.raises(ValueError):
+        InferenceConfig(
+            model_name="test_std_len",
+            device="cuda",
+            mean=(0.1, 0.1, 0.1),
+            std=bad_std_len,
+        )
+
+
+def test_is_std_zero():
+    with pytest.raises(ValueError):
+        InferenceConfig(
+            model_name="test_std_len",
+            device="cuda",
+            mean=(0.1, 0.1, 0.1),
+            std=(0.1, 0, 0.1),
+        )

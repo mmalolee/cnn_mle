@@ -18,6 +18,19 @@ class InferenceConfig:
                 f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
             )
 
+        if len(self.mean) != 3:
+            raise ValueError(
+                f"Mean must have exactly 3 values for RGB but {len(self.mean)} were given."
+            )
+
+        if len(self.std) != 3:
+            raise ValueError(
+                f"Std must have exactly 3 values for RGB but {len(self.std)} were given."
+            )
+
+        if any(s <= 0 for s in self.std):
+            raise ValueError("Std must be greater than 0 to avoid division by zero.")
+
     @property
     def img_size(self) -> int:
         return 250
