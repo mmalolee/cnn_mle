@@ -9,9 +9,9 @@ def temp_base(tmp_path):
     return tmp_path
 
 
-@pytest.fixture(scope="session")
-def paths():
-    return PathsConfig()
+@pytest.fixture(scope="function")
+def paths(temp_base):
+    return PathsConfig(temp_base)
 
 
 # # --- TESTS ----------------------------------------
@@ -53,7 +53,6 @@ def test_is_instance_paths(paths, attr_path):
     ],
 )
 def test_paths_structure(paths, attr_path, expected):
-    path = getattr(paths, attr_path, expected)
     assert getattr(paths, attr_path).name == expected
 
 
