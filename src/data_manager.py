@@ -8,7 +8,7 @@ from src.cfg.training_config import TrainingConfig
 
 
 @dataclass(frozen=True)
-class DataLoad:
+class LoaderData:
     path_config: PathsConfig
     train_config: TrainingConfig
 
