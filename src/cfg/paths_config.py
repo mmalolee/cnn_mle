@@ -1,10 +1,17 @@
 from pathlib import Path
+from typing import Optional
 
 
 class PathsConfig:
+    def __init__(self, base_dir: Optional[Path] = None):
+        if base_dir:
+            self._base_dir = base_dir.resolve()
+        else:
+            self._base_dir = Path(__file__).resolve().parent.parent.parent
+
     @property
     def base_dir(self) -> Path:
-        return Path(__file__).resolve().parent.parent.parent
+        return self._base_dir
 
     @property
     def data_dir(self) -> Path:

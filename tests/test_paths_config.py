@@ -4,6 +4,11 @@ from src.cfg.paths_config import PathsConfig
 
 
 # # --- FIXTURES -------------------------------------
+@pytest.fixture
+def temp_base(tmp_path):
+    return tmp_path
+
+
 @pytest.fixture(scope="session")
 def paths():
     return PathsConfig()
