@@ -27,8 +27,6 @@ def training_config_values(common_params):
 
 
 # # --- TESTS ----------------------------------------
-
-
 @pytest.mark.parametrize(
     "attr, value",
     [
