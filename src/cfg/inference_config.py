@@ -1,11 +1,12 @@
 from typing import ClassVar
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from torchvision import transforms
+from src.cfg.model_config import ModelConfig
 
 
 @dataclass(frozen=True, kw_only=True)
 class InferenceConfig:
-    model_name: str
+    model_cfg: ModelConfig = field(default_factory=ModelConfig)
     device: str
     mean: tuple[float, float, float] = (0.5, 0.5, 0.5)
     std: tuple[float, float, float] = (0.5, 0.5, 0.5)

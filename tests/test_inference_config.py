@@ -7,13 +7,12 @@ from torchvision import transforms
 # # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="function")
 def inference_config_with_default():
-    return InferenceConfig(model_name="test_model_with_default", device="cuda")
+    return InferenceConfig(device="cuda")
 
 
 @pytest.fixture(scope="function")
 def inference_config_with_values():
     return InferenceConfig(
-        model_name="test_model_with_values",
         device="cpu",
         mean=(0.1, 0.2, 0.3),
         std=(0.4, 0.5, 0.6),
@@ -24,7 +23,6 @@ def inference_config_with_values():
 @pytest.mark.parametrize(
     "attr, value",
     [
-        ("model_name", "test_model_with_default"),
         ("device", "cuda"),
         ("mean", (0.5, 0.5, 0.5)),
         ("std", (0.5, 0.5, 0.5)),
@@ -37,7 +35,6 @@ def test_with_default_values(inference_config_with_default, attr, value):
 @pytest.mark.parametrize(
     "attr, value",
     [
-        ("model_name", "test_model_with_values"),
         ("device", "cpu"),
         ("mean", (0.1, 0.2, 0.3)),
         ("std", (0.4, 0.5, 0.6)),
@@ -54,7 +51,6 @@ def test_is_in_allowed_devices(inference_config_with_values):
 @pytest.mark.parametrize(
     "attr, instance",
     [
-        ("model_name", str),
         ("device", str),
         ("mean", tuple),
         ("std", tuple),
@@ -101,7 +97,7 @@ def test_is_frozen(inference_config_with_values):
 
 def test_invalid_device_error():
     with pytest.raises(ValueError):
-        InferenceConfig(model_name="test_device_error", device="pegasus")
+        InferenceConfig(device="pegasus")
 
 
 def test_transformer_order(inference_config_with_values):
@@ -128,7 +124,6 @@ def test_resize_value(inference_config_with_default):
 def test_mean_len(bad_mean_len):
     with pytest.raises(ValueError):
         InferenceConfig(
-            model_name="test_mean_len",
             device="cuda",
             mean=bad_mean_len,
             std=(0.1, 0.1, 0.1),
@@ -139,7 +134,6 @@ def test_mean_len(bad_mean_len):
 def test_std_len(bad_std_len):
     with pytest.raises(ValueError):
         InferenceConfig(
-            model_name="test_std_len",
             device="cuda",
             mean=(0.1, 0.1, 0.1),
             std=bad_std_len,
@@ -149,7 +143,6 @@ def test_std_len(bad_std_len):
 def test_is_std_zero():
     with pytest.raises(ValueError):
         InferenceConfig(
-            model_name="test_std_len",
             device="cuda",
             mean=(0.1, 0.1, 0.1),
             std=(0.1, 0, 0.1),

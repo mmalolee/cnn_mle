@@ -11,14 +11,16 @@ def model_config():
 
 # # --- TESTS ----------------------------------------
 @pytest.mark.parametrize(
-    "attr, default", [("img_size", 250), ("num_classes", 4), ("input_channels", 3)]
+    "attr, default",
+    [("model_name", "CNN"), ("num_classes", 4), ("input_channels", 3)],
 )
 def test_values(model_config, attr, default):
     assert getattr(model_config, attr) == default
 
 
 @pytest.mark.parametrize(
-    "attr, default", [("img_size", int), ("num_classes", int), ("input_channels", int)]
+    "attr, default",
+    [("model_name", str), ("num_classes", int), ("input_channels", int)],
 )
 def test_is_instance(model_config, attr, default):
     assert isinstance(getattr(model_config, attr), default)
