@@ -5,10 +5,11 @@ def create_project_structure():
     PROJECT_STRUCTURE = {
         "": [".gitignore", "main.py", "requirements.txt"],
         "data": [],
-        "models/checkpoints": [],
+        "models/checkpoints": ["__init__.py"],
         "src": ["__init__.py", "model_loader.py", "utils.py", "data_manager.py"],
         "src/architectures": ["__init__.py", "cnn.py"],
         "src/cfg": [
+            "__init__.py",
             "inference_config.py",
             "model_config.py",
             "paths_config.py",
