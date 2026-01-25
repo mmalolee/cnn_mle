@@ -7,8 +7,8 @@ def create_project_structure():
         "data": [],
         "models/checkpoints": [],
         "src": ["__init__.py", "model_loader.py", "utils.py", "data_manager.py"],
+        "src/architectures": ["__init__.py", "cnn.py"],
         "src/cfg": [
-            "config.py",
             "inference_config.py",
             "model_config.py",
             "paths_config.py",
