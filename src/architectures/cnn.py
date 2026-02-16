@@ -7,13 +7,11 @@ class CNN(nn.Module):
     def __init__(self, model_cfg: ModelConfig):
         super().__init__()
         self.model_cfg = model_cfg
-
         self.features = nn.Sequential(
             self._conv_block(model_cfg.input_channels, 16),
             self._conv_block(16, 32),
             self._conv_block(32, 64),
         )
-
         self.classification = nn.Sequential(
             nn.Flatten(),
             self._linear_block(64 * 31 * 31, 128),
