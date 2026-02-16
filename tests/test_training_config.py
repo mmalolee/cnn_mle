@@ -9,7 +9,7 @@ from torchvision import transforms
 # # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="function")
 def common_params():
-    params = {"model_name": "test_training_model", "device": "cuda"}
+    params = {"device": "cuda"}
 
     return params
 
