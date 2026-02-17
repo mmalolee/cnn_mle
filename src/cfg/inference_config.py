@@ -6,11 +6,10 @@ from src.cfg.model_config import ModelConfig
 
 @dataclass(frozen=True, kw_only=True)
 class InferenceConfig:
-    model_cfg: ModelConfig = field(default_factory=ModelConfig)
     device: str
+    model_cfg: ModelConfig = field(default_factory=ModelConfig)
     mean: tuple[float, float, float] = (0.5, 0.5, 0.5)
     std: tuple[float, float, float] = (0.5, 0.5, 0.5)
-
     ALLOWED_DEVICES: ClassVar[tuple[str, str, str]] = ("cpu", "cuda", "mps")
 
     def __post_init__(self):

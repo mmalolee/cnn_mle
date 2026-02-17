@@ -5,15 +5,12 @@ from src.cfg.training_config import TrainingConfig
 from PIL import Image
 import torch
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
-from dataclasses import FrozenInstanceError
 
 
 # # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="session")
 def training_config():
     return TrainingConfig(
-        model_name="test_for_data_loader",
         device="cuda",
         epochs=10,
         learning_rate=0.001,
