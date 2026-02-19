@@ -8,3 +8,6 @@ models
 logs
 .pytest_cache
 todo.txt
+.python-version
+.venv
+.uv
