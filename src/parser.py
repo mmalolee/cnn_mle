@@ -1,10 +1,8 @@
 import argparse
-from src.cfg.training_config import TrainingConfig
-from src.data_manager import LoaderData
 import torch
 
 
-def parse_args():
+def parse_args() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(help="CNN model training params")
 
     # Training config args (child class)
@@ -22,12 +20,3 @@ def parse_args():
     )
 
     return parser.parse_args()
-
-
-def main():
-    args = parse_args()
-
-    try:
-        cfg = TrainingConfig(
-            
-        )
