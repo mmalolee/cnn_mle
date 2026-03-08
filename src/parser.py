@@ -1,5 +1,8 @@
 import argparse
 import torch
+from src.utils import get_logger
+
+logger = get_logger(__name__)
 
 
 def parse_args() -> argparse.ArgumentParser:
@@ -18,5 +21,7 @@ def parse_args() -> argparse.ArgumentParser:
         default="cuda" if torch.cuda.is_available() else "cpu",
         help="Training device (cuda, cpu, mps)",
     )
+
+    logger.info(f"Arguments parsed: {vars(parser.parse_args())}")
 
     return parser.parse_args()

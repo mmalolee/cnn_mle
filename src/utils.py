@@ -17,6 +17,7 @@ def get_logger(name: str) -> logging.Logger:
 
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(formatter)
+
         file_handler = logging.FileHandler(
             filename=PathsConfig().logs_dir / "log.log", encoding="utf-8"
         )
@@ -26,11 +27,3 @@ def get_logger(name: str) -> logging.Logger:
         logger.addHandler(file_handler)
 
     return logger
-
-
-if __name__ == "__main__":
-    log = get_logger("TEŚCIWO TEGO TYPU TUTAJ")
-    log.info("informacjone")
-    log.warning("warningcjon")
-    log.error("errocjone")
-    log.critical("kritikal")

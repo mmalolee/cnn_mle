@@ -1,6 +1,9 @@
 from src.cfg.model_config import ModelConfig
+from src.utils import get_logger
 import torch
 import torch.nn as nn
+
+logger = get_logger(__name__)
 
 
 class CNN(nn.Module):
@@ -17,6 +20,9 @@ class CNN(nn.Module):
             nn.Flatten(),
             self._linear_block(64 * 31 * 31, 128),
             self._linear_block(128, model_cfg.num_classes),
+        )
+        logger.info(
+            f"CNN architecture initialized with {self.model_cfg.num_classes} output classes."
         )
 
     def _conv_block(self, input_channels: int, output_channels: int) -> nn.Sequential:
