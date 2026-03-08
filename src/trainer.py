@@ -7,18 +7,21 @@ import torch.nn as nn
 import torch
 
 
-class ModelTraining:
-    def __init__(self, model: nn.Module, config: TrainingConfig, paths: PathsConfig):
-        self.model = model
+class ModelTrainer:
+    def __init__(
+        self, model: nn.Module, config: TrainingConfig, paths: PathsConfig
+    ) -> None:
         self.config = config
+        self.checkopoint_dir = config.checkpoint_dir
+        self.device = torch.device(config.device)
+        self.model = model.to(self.device)
         self.paths = paths
         self.optimizer = torch.optim.Adam(
             self.model.parameters(), lr=self.config.learning_rate
         )
         self.cost_func = nn.CrossEntropyLoss()
-        self.checkopoint_dir = config.checkpoint_dir
 
-    def _save_checkpoint(self, epoch: int, avg_loss: float):
+    def _save_checkpoint(self, epoch: int, avg_loss: float) -> None:
         self.config.checkpoint_dir.mkdir(parents=True, exist_ok=True)
         checkpoint_path = self.config.checkpoint_dir / f"model_ep_{epoch}.pth"
 
@@ -51,11 +54,13 @@ class ModelTraining:
 
         return running_loss / len(train_loader)
 
-    def fit(self, train_loader: LoaderData):
+    def fit(self, train_loader: LoaderData) -> None:
         print("training init")
 
         for epoch in range(1, self.config.epochs + 1):
+            print(f"epoka: {epoch}")
             avg_loss = self._train_one_epoch(train_loader)
             self._save_checkpoint(epoch, avg_loss)
+            print(avg_loss)
 
         print("training ended")

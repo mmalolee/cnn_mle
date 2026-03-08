@@ -3,7 +3,7 @@ import torch
 
 
 def parse_args() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(help="CNN model training params")
+    parser = argparse.ArgumentParser(description="CNN model training params")
 
     # Training config args (child class)
     parser.add_argument("--epochs", type=int, help="Number of training epochs")
