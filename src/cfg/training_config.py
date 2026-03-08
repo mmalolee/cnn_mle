@@ -14,7 +14,7 @@ class TrainingConfig(InferenceConfig):
     checkpoint_dir: Path = PathsConfig().checkpoints_dir
 
     def __post_init__(self):
-        super().__post_init__()s
+        super().__post_init__()
 
         if self.epochs < 1:
             raise ValueError("You need at least 1 epoch to train.")
