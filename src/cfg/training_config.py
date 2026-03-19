@@ -7,6 +7,7 @@ from torchvision import transforms
 
 @dataclass(frozen=True, kw_only=True)
 class TrainingConfig(InferenceConfig):
+    exper_name: str
     epochs: int
     learning_rate: float
     batch_size: int

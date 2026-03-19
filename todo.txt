@@ -1,3 +1,2 @@
 porządek w strukturze #DONE
-
 dodanie nazwy modelu i zapis w checkopoincie do FOLDERU

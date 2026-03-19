@@ -13,25 +13,26 @@ class ModelTrainer:
         self, model: nn.Module, config: TrainingConfig, paths: PathsConfig
     ) -> None:
         self.config = config
-        self.checkopoint_dir = config.checkpoint_dir
+        self.checkpoint_dir = config.checkpoint_dir / config.exper_name
         self.device = torch.device(config.device)
         self.model = model.to(self.device)
-        logger.info(f"Model moved to {self.device}")
         self.paths = paths
         self.optimizer = torch.optim.Adam(
             self.model.parameters(), lr=self.config.learning_rate
         )
         self.cost_func = nn.CrossEntropyLoss()
+
+        logger.info(f"Model moved to {self.device}")
         logger.info(f"ModelTrainer initialized. Training will run on: {self.device}")
 
     def _save_checkpoint(self, epoch: int, avg_loss: float) -> None:
         self.config.checkpoint_dir.mkdir(parents=True, exist_ok=True)
-        checkpoint_path = self.config.checkpoint_dir / f"model_ep_{epoch}.pth"
+        checkpoint_path = self.checkpoint_dir / f"model_ep_{epoch}.pth"
 
         state = {
             "epoch": epoch,
             "model_state_dict": self.model.state_dict(),
-            "optimizer_state_dict": self.optimizer.state_dict,
+            "optimizer_state_dict": self.optimizer.state_dict(),
             "loss": avg_loss,
             "config": self.config,
         }
