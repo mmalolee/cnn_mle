@@ -1,6 +1,8 @@
-from typing import ClassVar
 from dataclasses import dataclass, field
+from typing import ClassVar
+
 from torchvision import transforms
+
 from src.cfg.model_config import ModelConfig
 
 
@@ -14,9 +16,7 @@ class InferenceConfig:
 
     def __post_init__(self):
         if self.device not in InferenceConfig.ALLOWED_DEVICES:
-            raise ValueError(
-                f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}"
-            )
+            raise ValueError(f"Choose one of the allowed devices: {self.ALLOWED_DEVICES}")
 
         if len(self.mean) != 3:
             raise ValueError(

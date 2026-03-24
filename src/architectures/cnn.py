@@ -1,7 +1,8 @@
-from src.cfg.model_config import ModelConfig
-from src.utils import get_logger
 import torch
 import torch.nn as nn
+
+from src.cfg.model_config import ModelConfig
+from src.utils import get_logger
 
 logger = get_logger(__name__)
 

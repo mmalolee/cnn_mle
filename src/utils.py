@@ -1,5 +1,6 @@
 import logging
 import sys
+
 from src.cfg.paths_config import PathsConfig
 
 

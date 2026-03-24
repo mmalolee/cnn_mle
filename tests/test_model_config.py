@@ -1,6 +1,8 @@
-import pytest
-from src.cfg.model_config import ModelConfig
 from dataclasses import FrozenInstanceError
+
+import pytest
+
+from src.cfg.model_config import ModelConfig
 
 
 # # --- FIXTURES -------------------------------------
@@ -28,4 +30,4 @@ def test_is_instance(model_config, attr, default):
 
 def test_is_frozen(model_config):
     with pytest.raises(FrozenInstanceError):
-        setattr(model_config, "img_size", 5)
+        model_config.img_size = 5

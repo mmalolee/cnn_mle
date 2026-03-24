@@ -1,9 +1,10 @@
-import pytest
-from pathlib import Path
-from src.cfg.training_config import TrainingConfig
-from src.cfg.paths_config import PathsConfig
 from dataclasses import FrozenInstanceError
-from torchvision import transforms
+from pathlib import Path
+
+import pytest
+
+from src.cfg.paths_config import PathsConfig
+from src.cfg.training_config import TrainingConfig
 
 
 # # --- FIXTURES -------------------------------------
@@ -21,9 +22,7 @@ def training_config_with_default(common_params):
 
 @pytest.fixture(scope="function")
 def training_config_values(common_params):
-    return TrainingConfig(
-        **common_params, epochs=10, learning_rate=0.005, batch_size=32
-    )
+    return TrainingConfig(**common_params, epochs=10, learning_rate=0.005, batch_size=32)
 
 
 # # --- TESTS ----------------------------------------
@@ -66,7 +65,7 @@ def test_is_instance(training_config_values, attr, instance):
 
 def test_is_frozen(training_config_values):
     with pytest.raises(FrozenInstanceError):
-        setattr(training_config_values, "epochs", 15)
+        training_config_values.epochs = 15
 
 
 @pytest.mark.parametrize(
@@ -84,9 +83,7 @@ def test_value_error(invalid_args, common_params):
 def test_transformer(training_config_values):
     pil_steps = [type(t).__name__ for t in training_config_values.pil_transforms]
     tensor_steps = [type(t).__name__ for t in training_config_values.tensor_transforms]
-    training_steps = [
-        type(t).__name__ for t in training_config_values.training_transforms
-    ]
+    training_steps = [type(t).__name__ for t in training_config_values.training_transforms]
     expected = [*pil_steps, *training_steps, *tensor_steps]
     training_transformer = [
         type(t).__name__ for t in training_config_values.training_transformer.transforms

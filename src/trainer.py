@@ -1,25 +1,22 @@
-from src.data_manager import LoaderData
+import torch
+import torch.nn as nn
+
 from src.cfg.paths_config import PathsConfig
 from src.cfg.training_config import TrainingConfig
+from src.data_manager import LoaderData
 from src.utils import get_logger
-import torch.nn as nn
-import torch
 
 logger = get_logger(__name__)
 
 
 class ModelTrainer:
-    def __init__(
-        self, model: nn.Module, config: TrainingConfig, paths: PathsConfig
-    ) -> None:
+    def __init__(self, model: nn.Module, config: TrainingConfig, paths: PathsConfig) -> None:
         self.config = config
         self.checkpoint_dir = config.checkpoint_dir / config.exper_name
         self.device = torch.device(config.device)
         self.model = model.to(self.device)
         self.paths = paths
-        self.optimizer = torch.optim.Adam(
-            self.model.parameters(), lr=self.config.learning_rate
-        )
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.config.learning_rate)
         self.cost_func = nn.CrossEntropyLoss()
 
         logger.info(f"Model moved to {self.device}")
@@ -39,9 +36,7 @@ class ModelTrainer:
 
         torch.save(state, checkpoint_path)
 
-        logger.info(
-            f"Checkpoint saved for epoch {epoch} at {self.config.checkpoint_dir}"
-        )
+        logger.info(f"Checkpoint saved for epoch {epoch} at {self.config.checkpoint_dir}")
 
     def _train_one_epoch(self, train_loader: LoaderData) -> float:
         self.model.train()
@@ -84,7 +79,5 @@ class ModelTrainer:
             logger.warning("Training interrupted by user.")
 
         except Exception as e:
-            logger.critical(
-                f"Unexpected error during training: {str(e)}", exc_info=True
-            )
+            logger.critical(f"Unexpected error during training: {str(e)}", exc_info=True)
             raise e

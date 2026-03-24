@@ -1,8 +1,10 @@
-from pathlib import Path
 from dataclasses import dataclass
-from src.cfg.paths_config import PathsConfig
-from src.cfg.inference_config import InferenceConfig
+from pathlib import Path
+
 from torchvision import transforms
+
+from src.cfg.inference_config import InferenceConfig
+from src.cfg.paths_config import PathsConfig
 
 
 @dataclass(frozen=True, kw_only=True)

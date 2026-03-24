@@ -1,7 +1,9 @@
-import pytest
-from src.cfg.paths_config import PathsConfig
-from src import utils
 import logging
+
+import pytest
+
+from src import utils
+from src.cfg.paths_config import PathsConfig
 
 
 # # --- FIXTURES -------------------------------------

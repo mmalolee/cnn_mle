@@ -1,5 +1,7 @@
 import argparse
+
 import torch
+
 from src.utils import get_logger
 
 logger = get_logger(__name__)
@@ -9,10 +11,10 @@ def parse_args() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="CNN model training params")
 
     # Training config args (child class)
+    parser.add_argument("--exper_name", type=str, help="Experiment name.")
     parser.add_argument("--epochs", type=int, help="Number of training epochs")
     parser.add_argument("--lr", type=float, help="Learning rate")
     parser.add_argument("--batch_size", type=int, help="Batch size for Data Loader")
-    parser.add_argument("--model_name", type=str, help="Output model name")
 
     # Inference config args (parent class)
     parser.add_argument(

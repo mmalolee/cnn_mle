@@ -10,3 +10,23 @@ dependencies = [
     "torch>=2.10.0",
     "torchvision>=0.25.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-include = ["*.ipynb"] # Ważne dla Twoich notatników!
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY", "T20"]
+ignore = ["D100", "D103"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]

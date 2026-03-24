@@ -1,11 +1,13 @@
-from dataclasses import dataclass
 import os
+from dataclasses import dataclass
 from pathlib import Path
-from src.utils import get_logger
+
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+
 from src.cfg.paths_config import PathsConfig
 from src.cfg.training_config import TrainingConfig
+from src.utils import get_logger
 
 logger = get_logger(__name__)
 

@@ -1,7 +1,9 @@
-import pytest
-from src.cfg.inference_config import InferenceConfig
 from dataclasses import FrozenInstanceError
+
+import pytest
 from torchvision import transforms
+
+from src.cfg.inference_config import InferenceConfig
 
 
 # # --- FIXTURES -------------------------------------
@@ -92,7 +94,7 @@ def test_transformers_instances(inference_config_with_values, transformer, insta
 
 def test_is_frozen(inference_config_with_values):
     with pytest.raises(FrozenInstanceError):
-        setattr(inference_config_with_values, "device", "pegasus")
+        inference_config_with_values.device = "pegasus"
 
 
 def test_invalid_device_error():

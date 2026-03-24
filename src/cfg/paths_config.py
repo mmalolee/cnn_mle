@@ -1,9 +1,8 @@
 from pathlib import Path
-from typing import Optional
 
 
 class PathsConfig:
-    def __init__(self, base_dir: Optional[Path] = None):
+    def __init__(self, base_dir: Path | None = None):
         if base_dir:
             self._base_dir = base_dir.resolve()
         else:

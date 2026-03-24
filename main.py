@@ -1,10 +1,10 @@
+from src.architectures.cnn import CNN
 from src.cfg.paths_config import PathsConfig
 from src.cfg.training_config import TrainingConfig
-from src.utils import get_logger
-from src.parser import parse_args
 from src.data_manager import LoaderData
-from src.architectures.cnn import CNN
+from src.parser import parse_args
 from src.trainer import ModelTrainer
+from src.utils import get_logger
 
 logger = get_logger(__name__)
 
@@ -18,6 +18,7 @@ def main() -> None:
         logger.info("Loading configurations.")
         p_cfg = PathsConfig()
         t_cfg = TrainingConfig(
+            exper_name=args.exper_name,
             device=args.device,
             epochs=args.epochs,
             learning_rate=args.lr,

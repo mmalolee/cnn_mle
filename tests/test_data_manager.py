@@ -1,10 +1,11 @@
 import pytest
-from src.data_manager import LoaderData
+import torch
+from PIL import Image
+from torch.utils.data import DataLoader
+
 from src.cfg.paths_config import PathsConfig
 from src.cfg.training_config import TrainingConfig
-from PIL import Image
-import torch
-from torch.utils.data import DataLoader
+from src.data_manager import LoaderData
 
 
 # # --- FIXTURES -------------------------------------
@@ -81,9 +82,7 @@ def test_training_data_loader_error(paths_config, training_config):
 
 def test_testing_data_loader_error(paths_config, training_config):
     with pytest.raises(FileNotFoundError):
-        LoaderData(
-            path_config=paths_config, train_config=training_config
-        ).get_test_data_loader()
+        LoaderData(path_config=paths_config, train_config=training_config).get_test_data_loader()
 
 
 def test_training_item_is_tensor(loader_data):
