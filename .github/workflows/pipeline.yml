@@ -1,1 +1,40 @@
 name: CI
+
+# 1. KIEDY URUCHAMIAĆ?
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 2. POBIERZ KOD
+      - uses: actions/checkout@v4
+
+      # 3. ZAINSTALUJ UV (Magia szybkości)
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true # Zapamiętuje biblioteki, by następnym razem było szybciej
+
+      # 4. USTAW PYTHON (uv sam go pobierze na podstawie pyproject.toml)
+      - name: Set up Python
+        run: uv python install
+
+      # 5. INSTALACJA ZALEŻNOŚCI (Tylko te z lockfile)
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      # 6. SPRAWDZANIE JAKOŚCI (Ruff)
+      - name: Run Ruff (Lint & Format)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      # 7. TESTY (Pytest)
+      - name: Run Tests
+        run: uv run pytest
