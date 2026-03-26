@@ -20,7 +20,6 @@ class LoaderData:
     def _create_loader(
         self, root_path: Path, transformer: transforms.Compose, shuffle: bool
     ) -> DataLoader:
-
         if not root_path.exists():
             logger.critical(f"Data path does not exist: {root_path}")
             raise FileNotFoundError(f"Data path does not exist: {root_path}.")
