@@ -33,8 +33,8 @@ jobs:
       # 6. SPRAWDZANIE JAKOŚCI (Ruff)
       - name: Run Ruff (Lint & Format)
         run: |
-          uv run --prokect . ruff check .
-          uv run --prokect . ruff format --check .
+          uv run --project . ruff check .
+          uv run --project . ruff format --check .
 
       # 7. TESTY (Pytest)
       - name: Run Tests
