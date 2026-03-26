@@ -39,3 +39,5 @@ jobs:
       # 7. TESTY (Pytest)
       - name: Run Tests
         run: uv run pytest
+        env:
+          PYTHONPATH: .
