@@ -10,7 +10,7 @@ from src.cfg.training_config import TrainingConfig
 # # --- FIXTURES -------------------------------------
 @pytest.fixture(scope="function")
 def common_params():
-    params = {"device": "cuda"}
+    params = {"exper_name": "test", "device": "cuda"}
 
     return params
 

@@ -12,6 +12,7 @@ from src.data_manager import LoaderData
 @pytest.fixture(scope="session")
 def training_config():
     return TrainingConfig(
+        exper_name="test",
         device="cuda",
         epochs=10,
         learning_rate=0.001,
